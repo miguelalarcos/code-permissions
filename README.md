@@ -14,7 +14,7 @@ where *indicadores* is a normal collection with an extra field called *code*.
 And given that Meteor.users has a *roles* field, then you can do things like:
 
 ```coffee
-@Permission.register('indicador', 'indicadores') # register the name 'indicador' with the collection 'indicadores'
+@Permission.register('indicador') # register the name 'indicador'
 
 @indicadores.allow
     insert: (userId, doc)->
@@ -34,7 +34,7 @@ Meteor.publish "indicadores", ->
 There is a special collection called AccessControl, that is like:
 
 ```
-    collection: 
+    name: 
         type: String
     code:
         type: String
@@ -48,12 +48,12 @@ There is a special collection called AccessControl, that is like:
 and you can have a register like this one:
 
 ```
-    collection: 'indicadores',
+    name: 'indicador',
     code: 'ESP',
     roles: ['medico'],
     action: 'fetch'
 ```
 
-which means that if an user has the role 'medico', then can fetch all registers in collection 'indicadores' with the code ESP.
+which means that if an user has the role 'medico', then he can fetch all registers with the code ESP in the collection 'indicadores' (remember you are using the name 'indicador' with the collection 'indicadores').
 
 
