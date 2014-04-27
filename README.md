@@ -3,35 +3,43 @@ code-permissions
 
 A code based permission system for Meteor apps.
 
+I have been working for 6 years in a software for hospitals, and found the necessity of a code based permission system. I give you an example: for the same collection *Notes*, you have nurse notes, doctor notes, surgery notes and so on. They are different kind of notes, and a *code* field is used to differentiate them: 'NURSE', 'DOCTOR', 'SURGERY' can be the codes.
+
 If we have:
 
 ```coffee
-@indicadores = new Meteor.Collection "indicadores"
+@indicators = new Meteor.Collection "Clinic Indicators"
 ```
 
-where *indicadores* is a normal collection with an extra field called *code*.
+where *indicators* is a normal collection with an extra field called *code*.
 
 And given that Meteor.users has a *roles* field, then you can do things like:
 
 ```coffee
-@Permission.register('indicador') # register the name 'indicador'
+Permission.register('indicator') # register the name 'indicator'
 
-@indicadores.allow
+@indicators.allow
     insert: (userId, doc)->
-        Permission.can.insert.indicador(userId, doc.code) # note that you use the name indicador that you have registered.
+        Permission.can.insert.indicator(userId, doc.code) # note that you use the name indicator that you have registered.
     update: (userId, doc, fieldNames, modifier) ->
-        Permission.can.update.indicador(userId, doc.code)
+        Permission.can.update.indicator(userId, doc.code)
     remove: (userId, doc) ->
-        Permission.can.remove.indicador(userId, doc.code)
+        Permission.can.remove.indicator(userId, doc.code)
 
-indicadores = @indicadores
+#or simply
+Permission.protect indicators, 'indicator' # you protect the collection indicators with the name indicator
 
-Meteor.publish "indicadores", ->
-    codes_allowed = Permission.can.fetch.indicador(@userId)
-    indicadores.find({code: {$in: codes_allowed}})
+indicators = @indicators
+
+Meteor.publish "indicators", ->
+    codes_allowed = Permission.can.fetch.indicator(@userId) # note that you use the name indicator
+    indicators.find({code: {$in: codes_allowed}})
+
+Permission.grant 'indicator', 'ESP', ['doctor', 'nurse'], 'insert' # note you use the name indicator
+Permission.revoke 'indicator', 'ESP', ['nurse'], 'insert'    
 ```
 
-There is a special collection called AccessControl, that is like:
+There is a special and private collection called AccessControl, that is like:
 
 ```
     name: 
@@ -48,12 +56,12 @@ There is a special collection called AccessControl, that is like:
 and you can have a register like this one:
 
 ```
-    name: 'indicador',
+    name: 'indicator',
     code: 'ESP',
-    roles: ['medico'],
+    roles: ['doctor'],
     action: 'fetch'
 ```
 
-which means that if an user has the role 'medico', then he can fetch all registers with the code ESP in the collection 'indicadores' (remember you are using the name 'indicador' with the collection 'indicadores').
+which means that if an user has the role 'doctor', then he can fetch all registers with the code ESP in the collection 'indicators' (remember you are using the name 'indicator' with the collection 'indicators').
 
 

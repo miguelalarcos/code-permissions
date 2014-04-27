@@ -6,4 +6,6 @@ Package.on_use(function (api) {
     api.use(['coffeescript', 'underscore'], 'server');
 
     api.add_files('permissions.coffee', 'server');
+
+    api.export('Permission', 'server');
 });
