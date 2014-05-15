@@ -20,11 +20,11 @@ Permission.register('indicator') # register the name 'indicator'
 
 @indicators.allow
     insert: (userId, doc)->
-        Permission.can.insert.indicator(userId, doc.code) # note that you use the name indicator that you have registered.
+        Permission.can.insert.indicator(userId, doc._code) # note that you use the name indicator that you have registered.
     update: (userId, doc, fieldNames, modifier) ->
-        Permission.can.update.indicator(userId, doc.code)
+        Permission.can.update.indicator(userId, doc._code)
     remove: (userId, doc) ->
-        Permission.can.remove.indicator(userId, doc.code)
+        Permission.can.remove.indicator(userId, doc._code)
 
 #or simply
 Permission.protect indicators, 'indicator' # you protect the collection indicators with the name indicator
@@ -33,7 +33,7 @@ indicators = @indicators
 
 Meteor.publish "indicators", ->
     codes_allowed = Permission.can.fetch.indicator(@userId) # note that you use the name indicator
-    indicators.find({code: {$in: codes_allowed}})
+    indicators.find({_code: {$in: codes_allowed}})
 
 Permission.grant 'indicator', 'ESP', ['doctor', 'nurse'], 'insert' # note you use the name indicator
 Permission.revoke 'indicator', 'ESP', ['nurse'], 'insert'    
@@ -44,7 +44,7 @@ There is a special and private collection called AccessControl, that is like:
 ```
     name: 
         type: String
-    code:
+    _code:
         type: String
     roles:
         type: [String]
@@ -57,7 +57,7 @@ and you can have a register like this one:
 
 ```
     name: 'indicator',
-    code: 'ESP',
+    _code: 'ESP',
     roles: ['doctor'],
     action: 'fetch'
 ```
