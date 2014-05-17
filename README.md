@@ -49,7 +49,7 @@ There is a special and private collection called AccessControl, that is like:
     roles:
         type: [String]
     action:
-        type: [String]
+        type: String
         allowedValues: ['insert', 'update', 'remove', 'fetch']
 ```
 

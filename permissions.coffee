@@ -7,7 +7,7 @@ AccessControl = new Meteor.Collection "AccessControl",
         roles:
             type: [String]
         action:
-            type: [String]
+            type: String
             allowedValues: ['insert', 'update', 'remove', 'fetch']
 
 generate = (action, name)->
