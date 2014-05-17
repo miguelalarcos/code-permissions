@@ -35,8 +35,8 @@ Meteor.publish "indicators", ->
     codes_allowed = Permission.can.fetch.indicator(@userId) # note that you use the name indicator
     indicators.find({_code: {$in: codes_allowed}})
 
-Permission.grant 'indicator', 'ESP', ['doctor', 'nurse'], 'insert' # note you use the name indicator
-Permission.revoke 'indicator', 'ESP', ['nurse'], 'insert'    
+Permission.grant.insert.indicator, 'ESP', ['doctor', 'nurse'] # note you use the name indicator
+Permission.revoke.insert.indicator, 'ESP', ['nurse'], 'insert'    
 ```
 
 There is a special and private collection called AccessControl, that is like:

@@ -3,7 +3,7 @@
       "description": "A code based permission system for Meteor apps",
       "homepage": "https://github.com/miguelalarcos/code-permissions",
       "author": "Miguel Ángel Alarcos <miguel.alarcos@gmail.com>",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "git": "https://github.com/miguelalarcos/code-permissions.git",
       "packages": {}
 }
