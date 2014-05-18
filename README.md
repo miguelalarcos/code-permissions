@@ -3,7 +3,7 @@ code-permissions
 
 A code based permission system for Meteor apps.
 
-I have been working for 6 years in a software for hospitals, and found the necessity of a code based permission system. I give you an example: for the same collection *Notes*, you have nurse notes, doctor notes, surgery notes and so on. They are different kind of notes, and a *code* field is used to differentiate them: 'NURSE', 'DOCTOR', 'SURGERY' can be the codes.
+I have been working for 6 years in a software for hospitals, and found the necessity of a code based permission system. I give you an example: for the same collection *Notes*, you have nurse notes, doctor notes, surgery notes and so on. They are different kind of notes, and a *_code* field is used to differentiate them: 'NURSE', 'DOCTOR', 'SURGERY' can be the codes.
 
 If we have:
 
@@ -11,7 +11,7 @@ If we have:
 @indicators = new Meteor.Collection "Clinic Indicators"
 ```
 
-where *indicators* is a normal collection with an extra field called *code*.
+where *indicators* is a normal collection with an extra field called *_code*.
 
 And given that Meteor.users has a *roles* field, then you can do things like:
 
@@ -36,7 +36,7 @@ Meteor.publish "indicators", ->
     indicators.find({_code: {$in: codes_allowed}})
 
 Permission.grant.insert.indicator, 'ESP', ['doctor', 'nurse'] # note you use the name indicator
-Permission.revoke.insert.indicator, 'ESP', ['nurse'], 'insert'    
+Permission.revoke.insert.indicator, 'ESP', ['nurse']   
 ```
 
 There is a special and private collection called AccessControl, that is like:
