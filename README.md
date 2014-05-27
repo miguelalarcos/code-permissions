@@ -1,6 +1,8 @@
 code-permissions
 ================
 
+Note: I have no good solutions to set the code in the item, because I wanted to do that with a hook, but the hook is executed after the allow. Till I have a solution I am not going to use this package. I have remove from my boilerplate.
+
 A code based permission system for Meteor apps.
 
 I have been working for 6 years in a software for hospitals, and found the necessity of a code based permission system. I give you an example: for the same collection *Notes*, you have nurse notes, doctor notes, surgery notes and so on. They are different kind of notes, and a *_code* field is used to differentiate them: 'NURSE', 'DOCTOR', 'SURGERY' can be the codes.
